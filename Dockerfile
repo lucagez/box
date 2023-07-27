@@ -1,6 +1,7 @@
 FROM golang:1.20 as golang
 FROM ubuntu:22.04
 
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt install software-properties-common -y
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt update && apt install -y \
@@ -23,6 +24,8 @@ RUN apt update && apt install -y \
 		tmux \
 		jq \
 		htop \
+		redis-server \
+		postgresql \
 		&& rm -rf /var/lib/apt/lists/*
 
 # Tmux

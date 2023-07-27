@@ -4,6 +4,23 @@
 vim.g.mapleader = '\\'
 vim.g.maplocalleader = ' '
 
+local add_current_to_quickfix = function()
+  local filename = vim.fn.expand('%:p')
+  local line = vim.fn.line('.')
+  local col = vim.fn.col('.')
+  local text = vim.fn.getline('.')
+
+  local qflist = vim.fn.getqflist()
+
+  table.insert(qflist, { filename = filename, lnum = line, col = col, text = text })
+
+  vim.fn.setqflist(qflist)
+
+  print(string.format('File added to qflist: %s', filename))
+end
+
+vim.keymap.set('n', '<leader>l', add_current_to_quickfix, { desc = 'Add current file to quickfixlist' })
+
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -632,3 +649,4 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+

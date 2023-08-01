@@ -1,4 +1,3 @@
-FROM golang:1.20 as golang
 FROM ubuntu:22.04
 
 RUN apt update && apt install software-properties-common -y
@@ -54,10 +53,8 @@ COPY catppuccin.omp.json /root/
 COPY .zshrc /root/
 
 # Go
-COPY --from=golang /usr/local/go /usr/local/go
-ENV GOPATH /go
-ENV PATH /usr/local/go/bin:$PATH
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 1777 "$GOPATH"
+COPY go-install.sh /root/
+RUN cat /root/go-install.sh | bash
 
 # Patman
 RUN git clone https://github.com/lucagez/patman \

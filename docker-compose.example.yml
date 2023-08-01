@@ -7,6 +7,7 @@ services:
     volumes:
       - '.box/stuff/gh:/root/.config/gh'
       - '.box/stuff/github-copilot:/root/.config/github-copilot'
+      - '.box/stuff/.local:/root/.local'
 
       # projects
       # - bind mount all projects

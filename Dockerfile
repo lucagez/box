@@ -82,7 +82,8 @@ COPY ssh.sh /root/ssh.sh
 ENV EDITOR=nvim
 
 # Preemptively install neovim plugins
-RUN nvim --headless "+Lazy! sync" +qa
+# TODO: it fails on buildx
+# RUN nvim --headless "+Lazy! sync" +qa
 
 EXPOSE 22
 

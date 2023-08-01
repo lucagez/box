@@ -1,10 +1,9 @@
 FROM golang:1.20 as golang
 FROM ubuntu:22.04
 
-ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt install software-properties-common -y
 RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt update && apt install -y \
+RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y \
 		ninja-build \
 		gettext \
 		curl \
@@ -26,7 +25,13 @@ RUN apt update && apt install -y \
 		htop \
 		redis-server \
 		postgresql \
-		&& rm -rf /var/lib/apt/lists/*
+		openssh-server \
+		openssh-client \
+		gh \
+		direnv \
+		neofetch \
+		&& rm -rf /var/lib/apt/lists/* \
+		&& mkdir /var/run/sshd
 
 # Tmux
 RUN git clone https://github.com/tmux-plugins/tpm /root/.tmux/plugins/tpm
@@ -74,5 +79,15 @@ RUN curl https://getcroc.schollz.com | bash
 
 COPY init.lua /root/.config/nvim/init.lua
 
+# Add `enable_ssh` and `disable_ssh` commands
+COPY ssh.sh /root/ssh.sh
+
+ENV EDITOR=nvim
+
 # Preemptively install neovim plugins
 RUN nvim --headless "+Lazy! sync" +qa
+
+EXPOSE 22
+
+RUN chmod +x /root/ssh.sh
+ENTRYPOINT ["/root/ssh.sh"]

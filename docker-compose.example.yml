@@ -1,0 +1,14 @@
+services:
+  stuff:
+    command: <ssh_password>
+    image: box
+    ports:
+      - 2223:22
+    volumes:
+      - '.box/stuff/gh:/root/.config/gh'
+      - '.box/stuff/github-copilot:/root/.config/github-copilot'
+
+      # projects
+      # - bind mount all projects
+
+

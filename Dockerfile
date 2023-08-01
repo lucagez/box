@@ -57,7 +57,7 @@ COPY go-install.sh /root/
 RUN cat /root/go-install.sh | bash
 
 # Patman
-RUN git clone https://github.com/lucagez/patman \
+RUN source /root/.zshrc && git clone https://github.com/lucagez/patman \
 	&& cd patman \
 	&& make patman \
 	&& cp build/patman /usr/local/bin

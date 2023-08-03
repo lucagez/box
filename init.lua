@@ -468,6 +468,8 @@ require('telescope').setup {
       height         = 0.80,
       preview_cutoff = 120,
     },
+
+    file_ignore_patterns = { "node_modules" }
   },
   extensions = {
     file_browser = {
@@ -501,7 +503,7 @@ vim.keymap.set('n', '<leader><leader>', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
-vim.keymap.set('n', '<leader>ff', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = 'Search [F]iles' })
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>qf', require('telescope.builtin').quickfix, { desc = 'Quickfix' })

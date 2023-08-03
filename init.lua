@@ -457,6 +457,8 @@ vim.keymap.set('n', '<leader>qf', require('telescope.builtin').quickfix, { desc 
 vim.keymap.set('n', '<leader>qfh', require('telescope.builtin').quickfixhistory, { desc = 'Quickfix history' })
 vim.keymap.set('n', '<leader>jj', require('telescope.builtin').jumplist, { desc = 'Jumplist' })
 
+vim.api.nvim_create_user_command('GitStatus', require('telescope.builtin').git_status, {})
+
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
@@ -649,4 +651,3 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-

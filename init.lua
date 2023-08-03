@@ -4,6 +4,9 @@
 vim.g.mapleader = '\\'
 vim.g.maplocalleader = ' '
 
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+
 local add_current_to_quickfix = function()
   local filename = vim.fn.expand('%:p')
   local line = vim.fn.line('.')
@@ -44,6 +47,9 @@ require('lazy').setup({
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+
+  -- Minimap
+  'lewis6991/satellite.nvim',
 
   {
     -- LSP Configuration & Plugins
@@ -241,6 +247,24 @@ require('lazy').setup({
     end,
   },
 
+  {
+    -- Go debugger helpers
+    "ray-x/go.nvim",
+    dependencies = { -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("go").setup({
+        dap_debug = true,
+        dap_debug_gui = false,
+      })
+    end,
+    event = { "CmdlineEnter" },
+    ft = { "go", 'gomod' },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+  },
 
   {
     -- Debugger config
@@ -301,9 +325,6 @@ require('lazy').setup({
       dap.listeners.after.event_initialized['dapui_config'] = dapui.open
       dap.listeners.before.event_terminated['dapui_config'] = dapui.close
       dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-      -- Install golang specific config
-      require('dap-go').setup()
     end,
   },
 

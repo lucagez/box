@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Rerun this script in order to change the root password
+
 set -e
 
 if [ -z "$1" ]
@@ -14,4 +16,4 @@ FILE="/etc/ssh/sshd_config"
 grep -qxF '    PasswordAuthentication yes' "$FILE" || echo '    PasswordAuthentication yes' | tee -a "$FILE" > /dev/null
 grep -qxF '    PermitRootLogin yes' "$FILE" || echo '    PermitRootLogin yes' | tee -a "$FILE" > /dev/null
 
-/usr/sbin/sshd -D
+service ssh restart

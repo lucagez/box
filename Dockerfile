@@ -1,8 +1,10 @@
 FROM ubuntu:22.04
 
-RUN apt update && apt install software-properties-common -y
-RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y \
+RUN apt update \
+	&& apt install software-properties-common -y \
+	&& add-apt-repository ppa:deadsnakes/ppa \
+	&& apt update \
+	&& DEBIAN_FRONTEND=noninteractive apt install -y \
 		ninja-build \
 		gettext \
 		curl \
@@ -29,8 +31,8 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y \
 		gh \
 		direnv \
 		neofetch \
-		&& rm -rf /var/lib/apt/lists/* \
-		&& mkdir /var/run/sshd
+	&& rm -rf /var/lib/apt/lists/* \
+	&& mkdir /var/run/sshd
 
 # Tmux
 RUN git clone https://github.com/tmux-plugins/tpm /root/.tmux/plugins/tpm
@@ -60,7 +62,10 @@ RUN cat /root/go-install.sh | bash
 RUN source /root/.zshrc && git clone https://github.com/lucagez/patman \
 	&& cd patman \
 	&& make patman \
-	&& cp build/patman /usr/local/bin
+	&& cp build/patman /usr/local/bin \
+	&& go clean -cache -modcache -i -r \
+	&& cd .. \
+	&& rm -rf patman
 
 # Terminal niceness
 RUN curl -s https://ohmyposh.dev/install.sh | bash -s
@@ -77,13 +82,17 @@ RUN curl https://getcroc.schollz.com | bash
 COPY init.lua /root/.config/nvim/init.lua
 
 # Add `enable_ssh` and `disable_ssh` commands
-COPY ssh.sh /root/ssh.sh
+COPY ./ssh_init /usr/local/bin/
+RUN chmod +x /usr/local/bin/ssh_init \
+	# TODO: configurable password
+	&& ssh_init root
 
 ENV EDITOR=nvim
 
 # Preemptively install neovim plugins
 # TODO: it fails on buildx
-# RUN nvim --headless "+Lazy! sync" +qa
+COPY lazy-lock.json /root/.config/nvim/lazy-lock.json
+RUN nvim --headless "+Lazy! sync" +qa
 
 # TODO: After setup is completed, copy home into bkp folder
 # then on first run, copy bkp into home with an init.sh script.
@@ -91,5 +100,4 @@ ENV EDITOR=nvim
 
 EXPOSE 22
 
-RUN chmod +x /root/ssh.sh
-ENTRYPOINT ["/root/ssh.sh"]
+ENTRYPOINT ["/usr/sbin/sshd", "-D"]

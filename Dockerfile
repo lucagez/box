@@ -85,6 +85,10 @@ ENV EDITOR=nvim
 # TODO: it fails on buildx
 # RUN nvim --headless "+Lazy! sync" +qa
 
+# TODO: After setup is completed, copy home into bkp folder
+# then on first run, copy bkp into home with an init.sh script.
+# This makes possible to mount the whole home folder as a volume
+
 EXPOSE 22
 
 RUN chmod +x /root/ssh.sh

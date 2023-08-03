@@ -367,6 +367,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- Overrides
+-- https://github.com/nvim-telescope/telescope.nvim/blob/master/plugin/telescope.lua
+local telescopeBorderless = function(flavor)
+  local cp = require("catppuccin.palettes").get_palette(flavor)
+
+  return {
+    TelescopeBorder = { fg = cp.surface0, bg = cp.surface0 },
+    TelescopeSelectionCaret = { fg = cp.flamingo, bg = cp.surface1 },
+    TelescopeMatching = { fg = cp.peach },
+    TelescopeNormal = { bg = cp.surface0 },
+    TelescopeSelection = { fg = cp.text, bg = cp.surface1, bold = true },
+    TelescopeMultiSelection = { fg = cp.text, bg = cp.surface2 },
+
+    TelescopeTitle = { fg = cp.crust, bg = cp.green },
+    TelescopePreviewTitle = { fg = cp.crust, bg = cp.red },
+    TelescopePromptTitle = { fg = cp.crust, bg = cp.mauve },
+
+    TelescopePromptNormal = { fg = cp.flamingo, bg = cp.crust },
+    TelescopePromptBorder = { fg = cp.crust, bg = cp.crust },
+  }
+end
+
 require("catppuccin").setup({
   flavour = 'macchiato',
   integrations = {
@@ -398,7 +420,21 @@ require("catppuccin").setup({
       enabled = true,
       enable_ui = true, -- enable nvim-dap-ui
     }
-  }
+  },
+  highlight_overrides = {
+    latte = function()
+      return telescopeBorderless('latte')
+    end,
+    frappe = function()
+      return telescopeBorderless('frappe')
+    end,
+    macchiato = function()
+      return telescopeBorderless('macchiato')
+    end,
+    mocha = function()
+      return telescopeBorderless('mocha')
+    end,
+  },
 })
 
 vim.cmd.colorscheme 'catppuccin'
@@ -416,6 +452,21 @@ require('telescope').setup {
         ['<C-d>'] = false,
         ["<C-q>"] = tactions.send_selected_to_qflist + tactions.open_qflist,
       },
+    },
+    prompt_prefix = " 🦄  ",
+    layout_strategy = "horizontal",
+    layout_config = {
+      horizontal     = {
+        prompt_position = "bottom",
+        preview_width = 0.55,
+        results_width = 0.8,
+      },
+      vertical       = {
+        mirror = false,
+      },
+      width          = 0.87,
+      height         = 0.80,
+      preview_cutoff = 120,
     },
   },
   extensions = {

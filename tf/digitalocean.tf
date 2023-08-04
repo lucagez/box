@@ -51,8 +51,6 @@ packages:
 - python3-pip
 - ansible
 runcmd:
-- touch /root/cloud-init-started
-- echo "alias wait_cloud_init='tail -f /var/log/cloud-init-output.log'" >> ~/.bashrc
 - git clone https://github.com/lucagez/box /root/box
 - mkdir -p /root/.config/nvim
 - cp /root/box/init.lua /root/.config/nvim/

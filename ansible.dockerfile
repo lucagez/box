@@ -22,4 +22,7 @@ COPY ssh_init /usr/local/bin/
 
 RUN ansible-playbook -i localhost, local.playbook.yml -vvvv
 
+# TODO: improve in order to mount the whole home dir
+# without overriding with local empty fs
+
 CMD ["tail", "-f", "/dev/null"]

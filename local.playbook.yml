@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  become: true
+  become_user: root
+  connection: local
+  tasks:
+    - name: Import tasks
+      import_tasks:
+        file: tasks.yml

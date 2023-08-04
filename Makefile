@@ -5,5 +5,5 @@ packer:
 	@packer build packer.pkr.hcl
 
 provision:
-	@echo "📦 Provisioning..."
+	@echo "📦 Provisioning remote server..."
 	@ansible-playbook -i inventory.ini playbook.yml

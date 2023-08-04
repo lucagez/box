@@ -67,9 +67,6 @@ RUN source /root/.zshrc && git clone https://github.com/lucagez/patman \
 	&& cd .. \
 	&& rm -rf patman
 
-# Terminal niceness
-RUN curl -s https://ohmyposh.dev/install.sh | bash -s
-
 # Node.js version manager
 RUN curl -fsSL https://fnm.vercel.app/install | bash
 

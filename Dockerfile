@@ -68,7 +68,7 @@ RUN source /root/.zshrc && git clone https://github.com/lucagez/patman \
 	&& rm -rf patman
 
 # Node.js version manager
-RUN curl -fsSL https://fnm.vercel.app/install | bash
+RUN curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
 
 # Ensure fnm is in path
 RUN source /root/.zshrc && fnm install 18

@@ -51,7 +51,6 @@ SHELL ["/bin/zsh", "-c"]
 
 RUN chsh -s $(which zsh)
 
-COPY catppuccin.omp.json /root/
 COPY .zshrc /root/
 
 # Go

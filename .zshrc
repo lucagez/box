@@ -1,4 +1,7 @@
 #!/usr/bin/env zsh
+
+export SHELL=$(which zsh)
+
 ##########################
 #      Key bindings      #
 ##########################

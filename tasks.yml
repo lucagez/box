@@ -87,11 +87,10 @@
   shell:
     cmd: curl https://getcroc.schollz.com | bash
 
-- name: Execute ssh_init
+- name: Make ssh_init executable
   shell:
     cmd: |
       chmod +x /usr/local/bin/ssh_init
-      ssh_init root
 
 - name: Install neovim plugins
   shell:

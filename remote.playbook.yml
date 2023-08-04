@@ -1,0 +1,9 @@
+---
+- name: 'Provision Box'
+  hosts: default
+  become: true
+  remote_user: root
+  tasks:
+    - name: Import tasks
+      import_tasks:
+        file: tasks.yml

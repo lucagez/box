@@ -24,8 +24,7 @@ source "docker" "ubuntu_box" {
 	commit = true
 	changes = [
 		"ENV EDITOR nvim",
-		"EXPOSE 22",
-		"ENTRYPOINT /usr/sbin/sshd -D"
+		"CMD tail -f /dev/null"
 	]
 	run_command = ["-d", "-i", "-t", "--name", var.ansible_host, "{{.Image}}", "/bin/bash"]
 }
@@ -48,6 +47,9 @@ build {
 			".tmux.conf",
 			".zshrc",
 			"go-install.sh",
+			"local.playbook.yml",
+			"remote.playbook.yml",
+			"tasks.yml",
 		]
 		destination = "/root/"
 	}
@@ -73,7 +75,7 @@ build {
 	}
 
 	provisioner "ansible" {
-		playbook_file = "./playbook.yml"
+		playbook_file = "./remote.playbook.yml"
 		extra_arguments = [
 			"--extra-vars",
 			"ansible_host=${var.ansible_host} ansible_connection=${var.ansible_connection} ansible_user=root"

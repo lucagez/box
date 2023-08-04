@@ -5,6 +5,8 @@ services:
       - '.box/stuff/gh:/root/.config/gh'
       - '.box/stuff/github-copilot:/root/.config/github-copilot'
       - '.box/stuff/.local:/root/.local'
+      - '.box/stuff/.local:/root/powerlevel10k'
+      - '.box/stuff/.local:/root/.zsh'
 
       # projects
       # - bind mount all projects

@@ -11,4 +11,5 @@ services:
       # projects
       # - bind mount all projects
 
-
+# Consider creating an image FROM lucagex/box:main in case some used tool
+# not already included in the image is frequently used

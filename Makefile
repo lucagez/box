@@ -10,6 +10,6 @@ provision:
 
 digitalocean:
 	@echo "📦 Provisioning remote server..."
-	@cd ./tf
+	@cd ./tf/digitalocean
 	@terraform apply
 	@echo "📦 to monitor cloud-init logs run: ssh root@$(shell terraform output droplet_output) 'tail -f /var/log/cloud-init-output.log'"
